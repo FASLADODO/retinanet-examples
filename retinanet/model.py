@@ -182,7 +182,7 @@ class Model(nn.Module):
                 checkpoint[key] = state[key]
 
         save_path = state['path'].replace('.pth', '')
-        save_path = f'{save_path}_{state['iteration']}.pth'
+        save_path = f'{save_path}_{state["iteration"]}.pth'
         torch.save(checkpoint, save_path)
 
     @classmethod
