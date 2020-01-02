@@ -181,7 +181,9 @@ class Model(nn.Module):
             if key in state:
                 checkpoint[key] = state[key]
 
-        torch.save(checkpoint, state['path'])
+        save_path = state['path'].replace('.pth', '')
+        save_path = f'{save_path}_{state['iteration']}.pth'
+        torch.save(checkpoint, save_path)
 
     @classmethod
     def load(cls, filename):
