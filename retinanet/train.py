@@ -155,7 +155,10 @@ def train(model, state, path, annotations, val_path, val_annotations, resize, ma
                 model.train()
             
             if iteration == iterations or iteration % val_iterations == 0:
-                model.save(state)
+                if world > 1:
+                    model.module.save(state)
+                else:
+                    model.save(state)
 
             if iteration == iterations:
                 break
