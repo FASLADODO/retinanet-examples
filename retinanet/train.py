@@ -138,11 +138,11 @@ def train(model, state, path, annotations, val_path, val_annotations, resize, ma
                     })
 
                 # Save model weights
-                state.update({
-                    'iteration': iteration,
-                    'optimizer': optimizer.state_dict(),
-                    'scheduler': scheduler.state_dict(),
-                })
+                # state.update({
+                #     'iteration': iteration,
+                #     'optimizer': optimizer.state_dict(),
+                #     'scheduler': scheduler.state_dict(),
+                # })
                 # with ignore_sigint():
                 #     nn_model.save(state)
 
@@ -156,6 +156,11 @@ def train(model, state, path, annotations, val_path, val_annotations, resize, ma
             
             if is_master and (iteration == iterations or iteration % val_iterations == 0):
                 print(f'Saving model at iteration: {iteration}')
+                state.update({
+                    'iteration': iteration,
+                    'optimizer': optimizer.state_dict(),
+                    'scheduler': scheduler.state_dict(),
+                })
                 nn_model.save(state)
 
             if iteration == iterations:
