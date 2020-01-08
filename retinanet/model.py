@@ -176,13 +176,14 @@ class Model(nn.Module):
             'classes': self.classes,
             'state_dict': self.state_dict()
         }
+        iteration = state['iteration']
 
         for key in ('iteration', 'optimizer', 'scheduler'):
             if key in state:
                 checkpoint[key] = state[key]
 
         save_path = state['path'].replace('.pth', '')
-        save_path = f'{save_path}_{state["iteration"]}.pth'
+        save_path = f'{save_path}_{iteration}.pth'
         torch.save(checkpoint, save_path)
 
     @classmethod

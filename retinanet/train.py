@@ -143,7 +143,9 @@ def train(model, state, path, annotations, val_path, val_annotations, resize, ma
                     'optimizer': optimizer.state_dict(),
                     'scheduler': scheduler.state_dict(),
                 })
-                with ignore_sigint():
+                # with ignore_sigint():
+                #     nn_model.save(state)
+                if iteration == iterations or iteration % val_iterations == 0:
                     nn_model.save(state)
 
                 profiler.reset()
@@ -153,9 +155,6 @@ def train(model, state, path, annotations, val_path, val_annotations, resize, ma
                 infer(model, val_path, None, resize, max_size, batch_size, annotations=val_annotations,
                     mixed_precision=mixed_precision, is_master=is_master, world=world, use_dali=use_dali, is_validation=True, verbose=False)
                 model.train()
-            
-            # if iteration == iterations or iteration % val_iterations == 0:
-            #     nn_model.save(state)
 
             if iteration == iterations:
                 break
